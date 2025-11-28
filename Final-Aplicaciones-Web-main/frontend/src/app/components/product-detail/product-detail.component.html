@@ -1,0 +1,63 @@
+<div class="container my-5">
+    <div class="row" *ngIf="product">
+        <div class="col-lg-6 mb-4">
+            <div class="product-detail-image">
+                <img [src]="product.image_url || 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&h=800&fit=crop'"
+                    [alt]="product.name" class="img-fluid rounded shadow-lg">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="product-info fade-in">
+                <h1 class="display-5 fw-bold mb-3">{{ product.name }}</h1>
+                <div class="price-section mb-4">
+                    <span class="price-large">${{ product.price }}</span>
+                    <span class="badge bg-success ms-3" *ngIf="product.stock > 0">
+                        ✓ {{ product.stock }} disponibles
+                    </span>
+                    <span class="badge bg-danger ms-3" *ngIf="product.stock === 0">
+                        Agotado
+                    </span>
+                </div>
+                <div class="description-section mb-4">
+                    <h5 class="fw-bold mb-3">Descripción</h5>
+                    <p class="lead text-muted">{{ product.description }}</p>
+                </div>
+                <div class="features-section mb-4">
+                    <h5 class="fw-bold mb-3">Tallas Disponibles</h5>
+                    <div class="d-flex gap-2 mb-4" *ngIf="sizes.length > 0">
+                        <button *ngFor="let size of sizes" class="btn btn-outline-secondary"
+                            [class.active]="selectedSize === size" (click)="selectSize(size)">
+                            {{ size }}
+                        </button>
+                    </div>
+                    <p *ngIf="sizes.length === 0" class="text-muted">Talla única</p>
+
+                    <h5 class="fw-bold mb-3">Características</h5>
+                    <ul class="feature-list">
+                        <li>✨ Diseño exclusivo</li>
+                        <li>👗 Materiales de alta calidad</li>
+                        <li>🚀 Envío rápido y seguro</li>
+                        <li>💎 Garantía de satisfacción</li>
+                    </ul>
+                </div>
+                <div class="action-buttons d-flex gap-3">
+                    <button class="btn btn-primary btn-lg flex-grow-1" [disabled]="product.stock === 0"
+                        (click)="addToCart()">
+                        <span *ngIf="product.stock > 0">Agregar al Carrito</span>
+                        <span *ngIf="product.stock === 0">No Disponible</span>
+                    </button>
+                    <button class="btn btn-outline-primary btn-lg" routerLink="/catalog">
+                        Volver
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!product" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mt-3 text-muted">Cargando detalles del producto...</p>
+    </div>
+</div>

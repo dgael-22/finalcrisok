@@ -1,0 +1,10 @@
+/* Global App Styles */
+:host {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+router-outlet {
+    display: none;
+}

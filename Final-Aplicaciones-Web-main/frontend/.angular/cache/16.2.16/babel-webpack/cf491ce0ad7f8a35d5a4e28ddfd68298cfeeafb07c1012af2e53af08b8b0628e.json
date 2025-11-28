@@ -1,0 +1,1 @@
+{"ast":null,"code":"\"use strict\";\n\n```typescript\nimport { Component } from '@angular/core';\n\n@Component({\n    selector: 'app-navbar',\n    templateUrl: './navbar.component.html',\n    styleUrls: ['./navbar.component.css']\n})\nexport class NavbarComponent { }\n```;","map":null,"metadata":{},"sourceType":"script","externalDependencies":[]}

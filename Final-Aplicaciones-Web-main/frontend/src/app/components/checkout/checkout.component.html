@@ -1,0 +1,90 @@
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h2 class="mb-4 fw-bold gradient-text">Finalizar Compra</h2>
+
+            <div class="checkout-card card border-0 shadow-lg mb-4">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4">Resumen del Pedido</h5>
+
+                    <div *ngIf="cartItems.length === 0" class="text-center py-5">
+                        <i class="fas fa-shopping-basket fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Tu carrito está vacío</h5>
+                        <p class="mb-4">¡Explora nuestro catálogo y encuentra tu vestido ideal!</p>
+                        <a routerLink="/catalog" class="btn btn-primary">
+                            Seguir Comprando
+                        </a>
+                    </div>
+
+                    <div *ngIf="cartItems.length > 0">
+                        <div class="order-items">
+                            <div class="order-item" *ngFor="let item of cartItems">
+                                <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
+                                    <div class="d-flex align-items-center flex-grow-1">
+                                        <img [src]="item.image_url || 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=100&h=100&fit=crop'"
+                                            [alt]="item.name" class="rounded me-3"
+                                            style="width: 60px; height: 60px; object-fit: cover;">
+                                        <strong>{{ item.name }}</strong>
+                                    </div>
+                                    <div class="mx-2">
+                                        <input type="number" class="form-control" style="width: 60px;"
+                                            [(ngModel)]="item.quantity" (change)="updateQuantity(item, $event)"
+                                            min="1" />
+                                    </div>
+                                    <div class="text-end" style="width: 80px;">
+                                        ${{ item.price * item.quantity | number:'1.2-2' }}
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-danger ms-2"
+                                        (click)="removeFromCart(item)"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </div>
+                            <div class="total-section mt-4 pt-4 border-top">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h4 class="fw-bold">Total:</h4>
+                                    <h3 class="price-total">${{ total }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout-card card border-0 shadow-lg">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-4">Información de Envío</h5>
+                        <form (ngSubmit)="onSubmit()">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Nombre Completo</label>
+                                <input type="text" class="form-control form-control-lg" placeholder="Ej: María García"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Dirección</label>
+                                <input type="text" class="form-control form-control-lg"
+                                    placeholder="Calle, número, colonia" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">Ciudad</label>
+                                    <input type="text" class="form-control form-control-lg" placeholder="Ciudad"
+                                        required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">Código Postal</label>
+                                    <input type="text" class="form-control form-control-lg" placeholder="12345"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Teléfono</label>
+                                <input type="tel" class="form-control form-control-lg" placeholder="(123) 456-7890"
+                                    required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                Confirmar Pedido
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

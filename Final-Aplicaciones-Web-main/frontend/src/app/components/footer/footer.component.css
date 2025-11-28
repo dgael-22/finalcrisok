@@ -1,0 +1,62 @@
+.footer {
+    background: linear-gradient(135deg, #1F2937 0%, #111827 100%);
+    color: white;
+    margin-top: auto;
+}
+
+.footer h5,
+.footer h6 {
+    color: white;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: transparent !important;
+    color: #FFFFFF !important;
+    /* Force white */
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+.social-icon i {
+    color: #FFFFFF !important;
+    /* Ensure icon itself is white */
+}
+
+.social-icon:hover {
+    background: transparent !important;
+    /* No background on hover */
+    transform: translateY(-5px);
+    opacity: 0.8;
+    /* Slight fade on hover instead of background */
+    box-shadow: none;
+}
+
+
+.footer-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+    padding: 0.25rem 0;
+}
+
+.footer-link:hover {
+    color: white;
+    transform: translateX(5px);
+}
+
+hr {
+    border-color: rgba(255, 255, 255, 0.1);
+}

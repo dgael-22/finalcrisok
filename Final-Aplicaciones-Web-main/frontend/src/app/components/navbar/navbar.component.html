@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-lg navbar-dark glass fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/">
+            <img src="assets/logo.png" alt="Logo" height="40"
+                class="d-inline-block align-text-top rounded-circle border border-warning">
+            <span class="gradient-text fw-bold">Elegancia & Estilo</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}">
+                        Inicio
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/catalog" routerLinkActive="active">
+                        Catálogo
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/about" routerLinkActive="active">
+                        Nosotros
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/orders" routerLinkActive="active">
+                        Mis Pedidos
+                    </a>
+                </li>
+                <li class="nav-item ms-3">
+                    <a class="nav-link position-relative" routerLink="/checkout">
+                        <i class="fas fa-shopping-cart"></i>
+
+                        <span class="position-absolute badge rounded-pill bg-warning text-dark"
+                            *ngIf="cartItemCount > 0">
+                            {{ cartItemCount }}
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Spacer to prevent content from going under fixed navbar -->
+<div style="height: 80px;"></div>
