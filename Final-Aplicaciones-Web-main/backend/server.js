@@ -3,11 +3,20 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const apiRoutes = require('./routes/api');
 
+const helmet = require('helmet');
+const compression = require('compression');
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors());
+app.use(helmet());
+app.use(compression());
+app.use(cors({
+    origin: process.env.FRONTEND_URL || '*', // Allow all for dev, restrict in prod
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
