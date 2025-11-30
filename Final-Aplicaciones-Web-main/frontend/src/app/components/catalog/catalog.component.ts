@@ -26,7 +26,64 @@ export class CatalogComponent implements OnInit {
                 this.groupProducts();
             },
             (error) => {
-                console.error('Error fetching products:', error);
+                console.error('Error fetching products, using mock data:', error);
+                this.products = [
+                    {
+                        id: 1,
+                        name: 'Vestido de Noche Elegante',
+                        description: 'Vestido largo negro con detalles en encaje, ideal para eventos formales.',
+                        price: 120.00,
+                        image_url: 'assets/vestido-noche.jpg',
+                        category: 'Fiesta',
+                        stock: 10
+                    },
+                    {
+                        id: 2,
+                        name: 'Vestido Cóctel Rojo',
+                        description: 'Vestido corto rojo vibrante, perfecto para fiestas de cóctel.',
+                        price: 85.50,
+                        image_url: 'assets/vestido-coctel.jpg',
+                        category: 'Cóctel',
+                        stock: 15
+                    },
+                    {
+                        id: 3,
+                        name: 'Vestido de Verano Floral',
+                        description: 'Vestido ligero con estampado floral, fresco para el verano.',
+                        price: 45.00,
+                        image_url: 'assets/vestido-verano.jpg',
+                        category: 'Casual',
+                        stock: 20
+                    },
+                    {
+                        id: 4,
+                        name: 'Vestido de Gala Azul',
+                        description: 'Impresionante vestido azul rey con falda amplia.',
+                        price: 150.00,
+                        image_url: 'assets/vestido-gala.jpg',
+                        category: 'Gala',
+                        stock: 5
+                    },
+                    {
+                        id: 5,
+                        name: 'Vestido Boho Chic',
+                        description: 'Estilo bohemio con bordados y tela suave.',
+                        price: 60.00,
+                        image_url: 'assets/vestido-boho.jpg',
+                        category: 'Casual',
+                        stock: 12
+                    },
+                    {
+                        id: 6,
+                        name: 'Vestido de Novia Sencillo',
+                        description: 'Elegancia minimalista para tu día especial.',
+                        price: 350.00,
+                        image_url: 'assets/vestido-novia.jpg',
+                        category: 'Novia',
+                        stock: 3
+                    }
+                ];
+                this.groupProducts();
             }
         );
     }
