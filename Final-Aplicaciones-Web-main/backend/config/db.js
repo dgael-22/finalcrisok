@@ -1,22 +1,33 @@
 const mysql = require('mysql2');
 
-const db = mysql.createConnection({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || 'root',
-    database: process.env.DB_NAME || 'dress_shop_db',
-    port: process.env.DB_PORT || 3306,
-    ssl: {
-        rejectUnauthorized: false
-    }
-});
+// Check if we should use SQLite (default for local if DB_HOST is not set or set to 'sqlite')
+const useSqlite = process.env.DB_TYPE === 'sqlite' || !process.env.DB_HOST || process.env.DB_HOST === 'localhost';
 
-db.connect((err) => {
-    if (err) {
-        console.error('Error connecting to MySQL:', err);
-        return;
-    }
-    console.log('Connected to MySQL database: dress_shop_db');
-});
+let db;
+
+if (useSqlite) {
+    console.log('Using SQLite Database');
+    db = require('./db_sqlite');
+} else {
+    console.log('Using MySQL Database');
+    db = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+        port: process.env.DB_PORT,
+        ssl: {
+            rejectUnauthorized: false
+        }
+    });
+
+    db.connect((err) => {
+        if (err) {
+            console.error('Error connecting to MySQL:', err);
+            return;
+        }
+        console.log('Connected to MySQL database: ' + (process.env.DB_NAME || 'default'));
+    });
+}
 
 module.exports = db;

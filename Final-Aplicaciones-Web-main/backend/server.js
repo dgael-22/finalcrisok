@@ -10,7 +10,10 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(helmet());
+app.use(helmet({
+    contentSecurityPolicy: false, // Disable CSP to allow Bootstrap CDN and other external scripts
+    crossOriginEmbedderPolicy: false
+}));
 app.use(compression());
 app.use(cors({
     origin: process.env.FRONTEND_URL || '*', // Allow all for dev, restrict in prod
@@ -25,7 +28,10 @@ app.use('/api', apiRoutes);
 
 // Serve Static Files (Frontend)
 const path = require('path');
+// Serve for root path
 app.use(express.static(path.join(__dirname, '../frontend/dist/dress-shop-frontend')));
+// Serve for GitHub Pages base-href path (fixes local 404s for assets)
+app.use('/finalcrisok', express.static(path.join(__dirname, '../frontend/dist/dress-shop-frontend')));
 
 // Catch-all handler for SPA (Angular)
 app.get('*', (req, res) => {
