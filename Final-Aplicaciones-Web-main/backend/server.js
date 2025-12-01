@@ -23,6 +23,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Routes
 app.use('/api', apiRoutes);
 
+// Serve Static Files (Frontend)
+const path = require('path');
+app.use(express.static(path.join(__dirname, '../frontend/dist/dress-shop-frontend')));
+
+// Catch-all handler for SPA (Angular)
+app.get('*', (req, res) => {
+    // Skip API routes
+    if (req.path.startsWith('/api')) return res.status(404).send('API Endpoint not found');
+
+    res.sendFile(path.join(__dirname, '../frontend/dist/dress-shop-frontend/index.html'));
+});
+
 // Root Endpoint
 app.get('/', (req, res) => {
     res.send('Dress Shop API is running...');
@@ -30,7 +42,6 @@ app.get('/', (req, res) => {
 
 // Temporary Seed Endpoint
 const fs = require('fs');
-const path = require('path');
 const db = require('./config/db');
 
 app.get('/seed', (req, res) => {
