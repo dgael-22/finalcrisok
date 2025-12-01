@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const environment = {\n  production: true,\n  apiUrl: 'http://localhost:3001/api' // TODO: Change this to your hosted backend URL\n};","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

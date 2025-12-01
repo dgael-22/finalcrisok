@@ -33,18 +33,13 @@ export class CatalogComponent implements OnInit {
             }
         }, 3000);
 
-        // Add a timeout to force error if API hangs (common with mixed content/firewall issues)
-        // We need to handle the subscription manually or use RxJS operators if available.
-        // Since we can't easily add RxJS imports without seeing the top of the file, we'll use a simple setTimeout fallback
-        // or just rely on the error block. Ideally, we'd use .pipe(timeout(2000)).
-
         this.apiService.getProducts().subscribe(
-            (data) => {
+            (data: any) => {
                 this.products = data;
                 this.groupProducts();
                 this.loading = false;
             },
-            (error) => {
+            (error: any) => {
                 console.error('Error fetching products, using mock data:', error);
                 this.useMockData();
                 this.loading = false;
@@ -121,7 +116,35 @@ export class CatalogComponent implements OnInit {
             acc[category].push(product);
             return acc;
         }, {});
-        this.categories = Object.keys(this.groupedProducts);
+
+        // Initial categories list
+        const allCategories = Object.keys(this.groupedProducts);
+
+        // Filter based on query params
+        this.route.queryParams.subscribe((params: any) => {
+            const categoryParam = params['category'];
+            if (categoryParam) {
+                // Map URL params to actual Category names (case-insensitive/mapping)
+                const categoryMap: { [key: string]: string } = {
+                    'gala': 'Gala',
+                    'boda': 'Novia',
+                    'cocktail': 'Cóctel',
+                    'casual': 'Casual'
+                };
+
+                const targetCategory = categoryMap[categoryParam.toLowerCase()] || categoryParam;
+
+                // Filter categories to show only the selected one, or all if not found
+                this.categories = allCategories.filter(c => c.toLowerCase() === targetCategory.toLowerCase());
+
+                // If no match found (or empty), show all
+                if (this.categories.length === 0) {
+                    this.categories = allCategories;
+                }
+            } else {
+                this.categories = allCategories;
+            }
+        });
     }
 
     addToCart(product: any) {

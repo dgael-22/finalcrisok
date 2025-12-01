@@ -60,9 +60,13 @@ router.post('/orders', (req, res) => {
 
             const orderId = result.insertId;
             const itemValues = items.map(item => [orderId, item.productId, item.quantity, item.price]);
-            const itemsQuery = 'INSERT INTO order_items (order_id, product_id, quantity, price) VALUES ?';
 
-            db.query(itemsQuery, [itemValues], (err, result) => {
+            // Fix for SQLite compatibility (and standard SQL): Construct placeholders manually
+            const placeholders = itemValues.map(() => '(?, ?, ?, ?)').join(', ');
+            const itemsQuery = `INSERT INTO order_items (order_id, product_id, quantity, price) VALUES ${placeholders}`;
+            const flatValues = itemValues.reduce((acc, val) => acc.concat(val), []);
+
+            db.query(itemsQuery, flatValues, (err, result) => {
                 if (err) {
                     return db.rollback(() => res.status(500).json({ error: err.message }));
                 }
